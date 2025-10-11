@@ -25,6 +25,7 @@ double get_gc_content(const string& dna)
     return static_cast<double>(gc_count) / dna.length();
 }
 
+
 string reverse_string(string dna)
 {
     string reversed = "";
