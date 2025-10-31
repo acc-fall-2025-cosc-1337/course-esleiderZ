@@ -7,6 +7,17 @@ int add_numbers(int num1, int num2)
 }
 
 //write function code here
+// Function to calculate sales tax amount
+double get_sales_tax_amount(double meal_amount)
+{
+	return meal_amount * tax_rate;
+}
+
+// Function to calculate tip amount  
+double get_tip_amount(double meal_amount, double tip_rate)
+{
+	return meal_amount * tip_rate;
+}
 
 
 
