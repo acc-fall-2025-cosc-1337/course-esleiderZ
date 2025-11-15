@@ -1,55 +1,53 @@
-#include "tic_tac_toe.h"
-using std::string;
-using std::cin;
-using std::cout;
+#include "tic_tac_toe_manager.h"
+#include <iostream>
 
 int main()
 {
-    TicTacToe tic_tac_toe;
-    string first_player;
-    char play_again = 'Y';
+    TicTacToeManager manager;
+    std::string choice;
 
-    cout << "=== TIC TAC TOE ===\n";
-
-    while (play_again == 'Y' || play_again == 'y')
+    do
     {
-        cout << "\nEnter first player (X or O): ";
-        cin >> first_player;
+        TicTacToe game(3);
+        std::string first_player;
 
-        while (first_player != "X" && first_player != "x" &&
-               first_player != "O" && first_player != "o")
+        std::cout << "Enter first player (X or O): ";
+        std::cin >> first_player;
+
+        while (!(first_player == "X" || first_player == "x" ||
+                 first_player == "O" || first_player == "o"))
         {
-            cout << "Invalid input! Please enter X or O: ";
-            cin >> first_player;
+            std::cout << "Invalid. Enter X or O: ";
+            std::cin >> first_player;
         }
 
-        tic_tac_toe.start_game(first_player);
-        tic_tac_toe.display_board();
+        if (first_player == "x") first_player = "X";
+        if (first_player == "o") first_player = "O";
 
-        while (!tic_tac_toe.game_over())
+        game.start_game(first_player);
+        std::cout << game;
+
+        while (!game.game_over())
         {
-            int position;
-            cout << "Player " << tic_tac_toe.get_player() << ", enter position (1-9): ";
-            cin >> position;
-
-            tic_tac_toe.mark_board(position);
-            tic_tac_toe.display_board();
+            std::cin >> game;
+            std::cout << game;
         }
 
-        cout << "\nGame over!\n";
+        std::cout << "Winner: " << game.get_winner() << "\n";
 
-        cout << "\nWould you like to play again? (Y/N): ";
-        cin >> play_again;
+        manager.save_game(game);
 
-        while (play_again != 'Y' && play_again != 'y' &&
-               play_again != 'N' && play_again != 'n')
-        {
-            cout << "Please enter Y to play again or N to quit: ";
-            cin >> play_again;
-        }
-    }
+        int o, x, t;
+        manager.get_winner_totals(o, x, t);
 
-    cout << "\nThanks for playing Tic Tac Toe!\n";
+        std::cout << "X wins: " << x
+                  << "   O wins: " << o
+                  << "   Ties: " << t << "\n";
+
+        std::cout << "Play again? (Y/N): ";
+        std::cin >> choice;
+
+    } while (choice == "Y" || choice == "y");
+
     return 0;
 }
-
